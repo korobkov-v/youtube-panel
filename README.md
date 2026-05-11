@@ -1,21 +1,25 @@
 # YouTube Panel Quick Controls
 
-Небольшое Chrome-расширение для YouTube:
+A tiny Chrome extension for the very serious business of watching YouTube while Codex is working.
 
-- добавляет справа на панель кнопки скорости `1x`, `1.25x`, `1.5x`, `2.0x`, `2.5x`;
-- добавляет качество видео отдельными кнопками справа, от `480p` и выше;
-- заменяет всплывающий регулятор громкости на всегда видимый горизонтальный ползунок.
+YouTube's original player UX has opinions. Some of them limp. This puts the controls you actually touch where they are easier to reach, because in practice this is just more convenient.
 
-## Установка
+![YouTube Panel Quick Controls screenshot](screenshots/youtube-panel-controls.png)
 
-1. Открой `chrome://extensions`.
-2. Включи `Developer mode`.
-3. Нажми `Load unpacked`.
-4. Выбери папку этого репозитория.
-5. Открой или перезагрузи YouTube.
+- Adds quick speed buttons: `1x`, `1.25x`, `1.5x`, `2.0x`, `2.5x`.
+- Adds separate quality buttons on the right side, from `480p` and up.
+- Replaces the pop-up volume control with an always-visible horizontal slider.
 
-## Файлы
+## Install
 
-- `manifest.json` - описание расширения.
-- `content.js` - логика контролов на странице YouTube.
-- `styles.css` - внешний вид панели и горизонтального регулятора громкости.
+1. Open `chrome://extensions`.
+2. Enable `Developer mode`.
+3. Click `Load unpacked`.
+4. Select this repository folder.
+5. Open or reload YouTube.
+
+## Files
+
+- `manifest.json` - extension metadata.
+- `content.js` - YouTube player control logic.
+- `styles.css` - panel and horizontal volume slider styling.

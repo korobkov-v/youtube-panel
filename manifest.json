@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Panel Quick Controls",
-  "description": "Adds quick speed, quality, and horizontal volume controls to the YouTube player.",
+  "description": "A tiny YouTube control panel for watching videos while Codex works, because the default player UX still limps.",
   "version": "0.1.0",
   "icons": {
     "16": "icons/icon-16.png",
