@@ -6,7 +6,7 @@ YouTube's original player UX has opinions. Some of them limp. This puts the cont
 
 ![YouTube Panel Quick Controls screenshot](screenshots/youtube-panel-controls.png)
 
-- Adds quick speed buttons: `1x`, `1.25x`, `1.5x`, `2.0x`, `2.5x`.
+- Adds quick speed buttons: `1x`, `1.25x`, `1.5x`, `1.75x`, `2.0x`, `2.5x`.
 - Adds separate quality buttons on the right side, from `480p` and up.
 - Replaces the pop-up volume control with an always-visible horizontal slider.
 

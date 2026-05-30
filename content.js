@@ -1,7 +1,7 @@
 (() => {
   const CONTROL_ID = "qyp-controls";
   const VOLUME_CONTROL_ID = "qyp-volume-controls";
-  const SPEEDS = [1, 1.25, 1.5, 2.0, 2.5];
+  const SPEEDS = [1, 1.25, 1.5, 1.75, 2.0, 2.5];
   const QUALITY_LABELS = {
     auto: "Auto",
     highres: "8K",
