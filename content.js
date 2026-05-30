@@ -1,6 +1,7 @@
 (() => {
   const CONTROL_ID = "qyp-controls";
   const VOLUME_CONTROL_ID = "qyp-volume-controls";
+  const NATIVE_VOLUME_WIDTH = "48px";
   const SPEEDS = [1, 1.25, 1.5, 1.75, 2.0, 2.5];
   const QUALITY_LABELS = {
     auto: "Auto",
@@ -33,6 +34,7 @@
     scheduled: false,
   };
   const wiredVideos = new WeakSet();
+  const wiredVolumeAreas = new WeakSet();
 
   function getPlayer() {
     return (
@@ -77,6 +79,88 @@
 
   function qualityLabel(quality) {
     return QUALITY_LABELS[quality] || quality;
+  }
+
+  function setImportantStyles(element, styles) {
+    if (!element) {
+      return;
+    }
+
+    Object.entries(styles).forEach(([property, value]) => {
+      element.style.setProperty(property, value, "important");
+    });
+  }
+
+  function lockNativeVolumeArea(volumeArea) {
+    if (!volumeArea) {
+      return;
+    }
+
+    setImportantStyles(volumeArea, {
+      "box-sizing": "border-box",
+      flex: `0 0 ${NATIVE_VOLUME_WIDTH}`,
+      width: NATIVE_VOLUME_WIDTH,
+      "min-width": NATIVE_VOLUME_WIDTH,
+      "max-width": NATIVE_VOLUME_WIDTH,
+      padding: "0",
+      "padding-inline": "0",
+      "padding-left": "0",
+      "padding-right": "0",
+      overflow: "hidden",
+      transition: "none",
+      transform: "none",
+    });
+
+    setImportantStyles(volumeArea.querySelector(".ytp-volume-panel"), {
+      display: "none",
+      width: "0",
+      "min-width": "0",
+      margin: "0",
+      opacity: "0",
+      "pointer-events": "none",
+    });
+
+    setImportantStyles(volumeArea.querySelector(".ytp-mute-button"), {
+      "box-sizing": "border-box",
+      width: NATIVE_VOLUME_WIDTH,
+      "min-width": NATIVE_VOLUME_WIDTH,
+      "max-width": NATIVE_VOLUME_WIDTH,
+      height: "100%",
+      padding: "0",
+      transition: "none",
+      transform: "none",
+      scale: "1",
+    });
+
+    volumeArea
+      .querySelectorAll(".ytp-mute-button *, .ytp-volume-icon, .ytp-volume-icon *")
+      .forEach((element) => {
+        setImportantStyles(element, {
+          transition: "none",
+          transform: "none",
+          scale: "1",
+        });
+      });
+  }
+
+  function wireNativeVolumeArea(volumeArea) {
+    if (!volumeArea || wiredVolumeAreas.has(volumeArea)) {
+      return;
+    }
+
+    wiredVolumeAreas.add(volumeArea);
+
+    const relock = () => {
+      lockNativeVolumeArea(volumeArea);
+      requestAnimationFrame(() => lockNativeVolumeArea(volumeArea));
+      setTimeout(() => lockNativeVolumeArea(volumeArea), 50);
+    };
+
+    ["pointerenter", "pointerover", "mouseenter", "mouseover", "focusin"].forEach(
+      (eventName) => {
+        volumeArea.addEventListener(eventName, relock, true);
+      },
+    );
   }
 
   function getAvailableQualities(player) {
@@ -258,6 +342,9 @@
     }
 
     const volumeArea = leftControls.querySelector(".ytp-volume-area");
+    lockNativeVolumeArea(volumeArea);
+    wireNativeVolumeArea(volumeArea);
+
     if (volumeArea?.parentElement === leftControls) {
       if (volumeArea.nextElementSibling !== volumeControls) {
         volumeArea.insertAdjacentElement("afterend", volumeControls);
